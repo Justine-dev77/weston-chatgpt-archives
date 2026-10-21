@@ -1,0 +1,9 @@
+{
+  "name": "Weston ChatGPT Archives",
+  "short_name": "Weston Archives",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#100a13",
+  "theme_color": "#180d1f",
+  "icons": []
+}

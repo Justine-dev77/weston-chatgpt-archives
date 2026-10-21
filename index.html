@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#180d1f">
+  <title>Weston ChatGPT Archives</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <aside id="sidebar" class="sidebar">
+      <div class="brand">
+        <button id="sidebarToggle" class="icon-btn" aria-label="Masquer le menu">☰</button>
+        <div>
+          <div class="brand-kicker">WESTON</div>
+          <h1>ChatGPT Archives</h1>
+        </div>
+      </div>
+
+      <div class="sidebar-actions">
+        <button id="importBtn" class="primary">Importer un export</button>
+        <button id="backupBtn" class="secondary">Exporter ma sauvegarde Weston</button>
+        <button id="restoreBtn" class="secondary">Restaurer une sauvegarde</button>
+      </div>
+
+      <nav class="filters">
+        <button class="filter active" data-filter="all">Toutes <span id="countAll">0</span></button>
+        <button class="filter" data-filter="favorites">★ Favoris <span id="countFav">0</span></button>
+        <button class="filter" data-filter="unfiled">Non classées <span id="countUnfiled">0</span></button>
+        <button class="filter" data-filter="hidden">Masquées <span id="countHidden">0</span></button>
+      </nav>
+
+      <section class="folders-panel">
+        <div class="section-title">
+          <span>Dossiers / arcs</span>
+          <button id="addFolderBtn" class="tiny-btn" title="Ajouter un dossier">＋</button>
+        </div>
+        <div id="folderList"></div>
+      </section>
+
+      <div class="settings">
+        <label><input id="hideUntitled" type="checkbox"> Masquer « Sans titre »</label>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button id="mobileMenuBtn" class="icon-btn mobile-only" aria-label="Ouvrir le menu">☰</button>
+        <div class="search-wrap">
+          <input id="searchInput" type="search" placeholder="Rechercher une scène, un dialogue, un personnage…">
+          <span id="searchCount"></span>
+        </div>
+        <button id="clearSearchBtn" class="icon-btn" title="Effacer la recherche">×</button>
+      </header>
+
+      <div class="workspace">
+        <section class="conversation-list-panel">
+          <div class="list-toolbar">
+            <div>
+              <strong id="listTitle">Toutes les conversations</strong>
+              <small id="listSubtitle">Importe ton export ChatGPT pour commencer.</small>
+            </div>
+            <select id="sortSelect" aria-label="Tri">
+              <option value="date_desc">Plus récentes</option>
+              <option value="date_asc">Plus anciennes</option>
+              <option value="title_asc">Titre A → Z</option>
+            </select>
+          </div>
+          <div id="conversationList" class="conversation-list">
+            <div class="empty-state">
+              <div class="empty-icon">🖤</div>
+              <h2>Pas encore d’archives Weston</h2>
+              <p>Importe <code>conversations.json</code>. Le tri Weston se fait directement sur ton appareil.</p>
+            </div>
+          </div>
+        </section>
+
+        <article id="reader" class="reader">
+          <div class="reader-empty">
+            <div class="empty-icon">📖</div>
+            <h2>Choisis une conversation</h2>
+            <p>La reprise de lecture est enregistrée automatiquement sur cet appareil.</p>
+          </div>
+        </article>
+      </div>
+    </main>
+  </div>
+
+  <input id="fileInput" type="file" accept=".json,application/json" hidden>
+  <input id="backupInput" type="file" accept=".json,application/json" hidden>
+
+  <dialog id="importDialog">
+    <form method="dialog" class="dialog-card">
+      <h2>Import Weston Academy</h2>
+      <p id="importSummary">Analyse en cours…</p>
+      <div class="import-stats">
+        <div><strong id="detectedCount">0</strong><span>détectées Weston</span></div>
+        <div><strong id="reviewCount">0</strong><span>à vérifier</span></div>
+        <div><strong id="excludedCount">0</strong><span>écartées</span></div>
+      </div>
+      <label class="dialog-check"><input id="includeReview" type="checkbox"> Inclure aussi les conversations « à vérifier »</label>
+      <p class="privacy-note">Les données restent dans ce navigateur. Elles ne sont pas envoyées ailleurs.</p>
+      <div class="dialog-actions">
+        <button value="cancel" class="secondary">Annuler</button>
+        <button id="confirmImportBtn" value="default" class="primary" type="button">Importer</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="folderDialog">
+    <form method="dialog" class="dialog-card compact">
+      <h2>Nouveau dossier / arc</h2>
+      <input id="folderNameInput" maxlength="60" placeholder="Ex. Mission Melvin">
+      <div class="dialog-actions">
+        <button value="cancel" class="secondary">Annuler</button>
+        <button id="createFolderBtn" value="default" class="primary" type="button">Créer</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
